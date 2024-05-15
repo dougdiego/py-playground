@@ -14,7 +14,7 @@ source venv/bin/activate
 ```
 pip install openai
 pip install chromadb
-pip install langchain pypdf tiktoken
+pip install openai chromadb langchain pypdf tiktoken
 ```
 
 

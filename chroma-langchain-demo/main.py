@@ -37,6 +37,7 @@ collection = chroma_db.get()
 
 # If the collection is empty, create a new one
 if len(collection["ids"]) == 0:
+    print("Creating a new collection")
     # Create a new Chroma database from the documents
     chroma_db = Chroma.from_documents(
         documents=docs,
@@ -47,6 +48,9 @@ if len(collection["ids"]) == 0:
 
     # Save the Chroma database to disk
     chroma_db.persist()
+
+print("Collection:")
+print(collection)
 
 # Prepare query
 query = "What is this document about?"
