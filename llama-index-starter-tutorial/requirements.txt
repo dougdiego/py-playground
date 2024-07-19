@@ -1,0 +1,5 @@
+llama_index
+black
+python-dotenv
+llama-index-llms-ollama
+llama-index-embeddings-huggingface

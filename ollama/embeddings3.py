@@ -79,7 +79,7 @@ print(collection)
 ## COPIED
 
 # Prepare query
-query = "What is Zak's email address?"
+query = "Can you summarize the conversation with Mark Cunningham on 2023-04-12"
 
 print("Similarity search:")
 print(chroma_db.similarity_search(query))
