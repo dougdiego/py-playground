@@ -47,7 +47,41 @@ class LocalLLMChat(BaseChatModel):
 def process_with_local_llm(content):
     chat = LocalLLMChat()
     #prompt = """Please read the following transcription of a journal entry that was transcribed from audio using the Whisper Model. Correct any inaccuracies in spelling, grammar, punctuation, and contextually obvious transcription errors, but maintain the original tone, style, and level of detail. Do not add any content or interpretations beyond what is explicitly stated. Preserve the conversational and informal journal style of the text. Return only the corrected version without additional commentary."""
-    prompt = """Please read the following transcription of a journal entry transcribed using the Whisper Model. Correct any spelling, grammar, punctuation, and contextually obvious transcription errors, ensuring the text is coherent and preserves its conversational journal style. Do not add or embellish content that was not explicitly stated in the original text, including interpretations or elaborations. If a section is unclear or ambiguous, make minimal corrections while maintaining the original meaning as closely as possible. Return only the corrected text without any additional commentary or formatting changes."""
+    #prompt = """Please read the following transcription of a journal entry transcribed using the Whisper Model. Correct any spelling, grammar, punctuation, and contextually obvious transcription errors, ensuring the text is coherent and preserves its conversational journal style. Do not add or embellish content that was not explicitly stated in the original text, including interpretations or elaborations. If a section is unclear or ambiguous, make minimal corrections while maintaining the original meaning as closely as possible. Return only the corrected text without any additional commentary or formatting changes."""
+    prompt = """As an AI assistant processing a Whisper-transcribed journal entry, your task is to:
+
+1. Fix ONLY these specific items:
+   - Basic spelling (e.g., "expresses" to "espressos")
+   - Punctuation and capitalization
+   - Common transcription errors (e.g., "yo" when context clearly indicates something else)
+   - Basic formatting of times, dates, and numbers
+   - Proper titles of media (TV shows, movies, books)
+   - Brand names and proper nouns
+
+2. Examples of proper title corrections:
+   - "shits creek" → "Schitt's Creek"
+   - "silo" → "Silo"
+   - Maintain proper capitalization and apostrophes in titles
+
+3. DO NOT:
+   - Add any new information not explicitly stated
+   - Make assumptions about how events ended
+   - Fill in missing details
+   - Add transitions between thoughts
+   - Change incomplete sentences into complete ones
+   - Add or remove any events or actions
+
+4. PRESERVE EXACTLY:
+   - All times mentioned
+   - All names
+   - All activities described
+   - Incomplete thoughts or sentences
+   - The casual, speech-like style
+   - The original sequence of events
+
+The final text should be one paragraph with no newlines or extra spaces.
+
+Return only the corrected text without any additions or embellishments."""
 
     messages = [HumanMessage(content=f"{prompt}\n\n{content}")]
     response = chat.invoke(messages)
