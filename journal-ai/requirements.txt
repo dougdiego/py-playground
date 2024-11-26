@@ -1,0 +1,5 @@
+black
+langchain
+langchain-community
+openai
+python-dotenv
