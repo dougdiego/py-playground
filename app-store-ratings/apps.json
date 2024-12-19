@@ -1,0 +1,19 @@
+{
+  "apps": [
+    {
+      "name": "Prosper Borrower",
+      "google_play_id": "com.prosper.borrower.mobile",
+      "apple_store_id": "com.prosper.ios.Borrower"
+    },
+    {
+      "name": "Prosper Investor",
+      "google_play_id": "com.prosper.android.investorapp",
+      "apple_store_id": "com.prosper.ios.investor"
+    },
+    {
+      "name": "Prosper Card",
+      "google_play_id": "com.prosper.cardhub",
+      "apple_store_id": "com.prosper.cardhub"
+    }
+  ]
+}

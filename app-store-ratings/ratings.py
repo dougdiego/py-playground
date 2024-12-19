@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import json
 
 # https://apps.apple.com/us/app/prosper-invest/id1294834607
 # https://play.google.com/store/apps/details?id=com.prosper.android.investorapp&hl=en_US&gl=US&pli=1
@@ -25,10 +26,19 @@ def get_apple_store_rating(bundle_id):
     #rating = 1
     return (rating, count)
 
-# Usage
-google_rating, google_count = get_google_play_rating('com.prosper.android.investorapp')
-apple_rating, apple_count = get_apple_store_rating('com.prosper.ios.Borrower')  # Replace with your App ID
+def process_apps():
+    with open('apps.json', 'r') as file:
+        data = json.load(file)
+        
+    for app in data['apps']:
+        print(f"\nProcessing ratings for {app['name']}:")
+        
+        google_rating, google_count = get_google_play_rating(app['google_play_id'])
+        apple_rating, apple_count = get_apple_store_rating(app['apple_store_id'])
+        
+        print(f"Google Play Rating: {google_rating} Count: {google_count}")
+        print(f"Apple App Store Rating: {apple_rating} Count: {apple_count}")
 
-print(f"Google Play Rating: {google_rating} Count: {google_count}")
-print(f"Apple App Store Rating: {apple_rating} Count: {apple_count}")
+if __name__ == "__main__":
+    process_apps()
 
