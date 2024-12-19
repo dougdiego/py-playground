@@ -2,6 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 import json
 from datetime import datetime
+import locale
+
+# Set locale for number formatting
+locale.setlocale(locale.LC_ALL, '')
 
 # https://apps.apple.com/us/app/prosper-invest/id1294834607
 # https://play.google.com/store/apps/details?id=com.prosper.android.investorapp&hl=en_US&gl=US&pli=1
@@ -13,13 +17,13 @@ def get_google_play_rating(app_id):
     #print(f"response: {response.text}")
     soup = BeautifulSoup(response.text, 'html.parser')
     rating = soup.find('div', class_='TT9eCd').text
-    clean_rating = rating.replace("star", "")
+    clean_rating = float(rating.replace("star", ""))
     count = soup.find('div', class_='g1rdde').text
     # Clean up the count string
     clean_count = count.replace(" reviews", "").replace("reviews", "").replace(",", "").strip()
     if 'K' in clean_count:
         clean_count = float(clean_count.replace('K', '')) * 1000
-        clean_count = int(clean_count)
+    clean_count = int(float(clean_count))  # Ensure it's an integer
     return clean_rating, clean_count
     
 def get_apple_store_rating(bundle_id):
@@ -96,13 +100,13 @@ def generate_html(apps_data):
                 <tbody>
                     <tr>
                         <td>Google</td>
-                        <td>{app['google_rating']} ⭐</td>
-                        <td>{app['google_count']} 💬</td>
+                        <td>{app['google_rating']:.2f} ⭐</td>
+                        <td>{f"{app['google_count']:,}"} 💬</td>
                     </tr>
                     <tr>
                         <td>Apple</td>
                         <td>{app['apple_rating']:.2f} ⭐</td>
-                        <td>{app['apple_count']} 💬</td>
+                        <td>{f"{app['apple_count']:,}"} 💬</td>
                     </tr>
                 </tbody>
             </table>
