@@ -96,13 +96,13 @@ def generate_html(apps_data):
                 <tbody>
                     <tr>
                         <td>Google</td>
-                        <td>{app['google_rating']}</td>
-                        <td>{app['google_count']}</td>
+                        <td>{app['google_rating']} ⭐</td>
+                        <td>{app['google_count']} 💬</td>
                     </tr>
                     <tr>
                         <td>Apple</td>
-                        <td>{app['apple_rating']:.2f}</td>
-                        <td>{app['apple_count']}</td>
+                        <td>{app['apple_rating']:.2f} ⭐</td>
+                        <td>{app['apple_count']} 💬</td>
                     </tr>
                 </tbody>
             </table>
@@ -116,6 +116,7 @@ def generate_html(apps_data):
     <!DOCTYPE html>
     <html>
     <head>
+        <meta charset="UTF-8">
         <title>App Store Ratings</title>
         <style>
         {css}
