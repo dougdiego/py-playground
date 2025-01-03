@@ -1,0 +1,4 @@
+black
+python-dotenv
+pandas
+openpyxl
