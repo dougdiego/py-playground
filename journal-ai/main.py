@@ -4,6 +4,8 @@ from langchain_community.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage
 from dotenv import load_dotenv
 
+OBSIDIAN_JOURNAL_PATH = "/Users/dougdiego/Vaults/Personal/Journal 2025.md"
+
 load_dotenv()
 
 
@@ -13,7 +15,9 @@ def process_with_chatgpt(content):
 
     messages = [HumanMessage(content=f"{prompt}\n\n{content}")]
     response = chat.invoke(messages)
-    return response.content
+    # Clean up the response by replacing newlines with spaces and removing extra spaces
+    cleaned_response = ' '.join(response.content.split())
+    return cleaned_response
 
 
 def process_file(input_file):
@@ -32,18 +36,37 @@ def process_file(input_file):
 
             # Write original content and AI response to output file
             with open(output_file, "w") as outfile:
-                # outfile.write("Original Entry:\n\n")
-                # outfile.write(content)
-                # outfile.write("\n\nAI Analysis:\n\n")
                 outfile.write(ai_response)
 
         print(f"Successfully created: {output_file}")
+        return ai_response
 
     except FileNotFoundError:
         print(f"Error: Input file '{input_file}' not found")
+        return None
     except Exception as e:
         print(f"Error: {str(e)}")
-
+        return None
+        
+def update_obsidian_file(input_file, cleaned_text, obsidian_file):
+    try:
+        # Extract date from input file name
+        base_name = os.path.basename(input_file)
+        # Get just the date portion (first 10 characters of YYYY-MM-DD)
+        date = os.path.splitext(base_name)[0][:10]
+        
+        # Format the content with header
+        formatted_content = f"\n## {date}\n{cleaned_text}\n"
+        
+        # Append to Obsidian file
+        with open(obsidian_file, 'a') as f:
+            f.write(formatted_content)
+            
+        print(f"Successfully appended to: {obsidian_file}")
+        
+    except Exception as e:
+        print(f"Error updating Obsidian file: {str(e)}")
+        return None
 
 def main():
     if len(sys.argv) != 2:
@@ -51,8 +74,10 @@ def main():
         sys.exit(1)
 
     input_file = sys.argv[1]
-    process_file(input_file)
-
+    cleaned_text = process_file(input_file)
+    if cleaned_text is None:
+        sys.exit(1)
+    update_obsidian_file(input_file, cleaned_text, OBSIDIAN_JOURNAL_PATH)
 
 if __name__ == "__main__":
     main()
