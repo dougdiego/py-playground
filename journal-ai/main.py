@@ -4,7 +4,7 @@ from langchain_community.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage
 from dotenv import load_dotenv
 
-OBSIDIAN_JOURNAL_PATH = "/Users/dougdiego/Vaults/Personal/Journal 2025.md"
+OBSIDIAN_JOURNAL_PATH = "/Users/doug/Vaults/Personal/Journal 2025.md"
 
 load_dotenv()
 

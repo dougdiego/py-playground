@@ -1,25 +1,68 @@
-### Set up virtual environment
+## Prerequisites
 
-```
-python -m pip install virtualenv
-virtualenv venv
-source venv/bin/activate
-```
+- Python 3.13 or higher
+- [uv](https://docs.astral.sh/uv/) package manager
 
-### Install dependencies
+## Installation
 
-```
-python -m pip install -r requirements.txt
-```
+### 1. Install uv
 
-### Run
+**Via curl:**
 
-```
-python main.py <path-to-file>
+```bash
+curl -Ls https://astral.sh/uv/install.sh | sh
 ```
 
-Example:
+**Via Homebrew (macOS):**
+
+```bash
+brew install uv
+```
+
+**Via pip:**
+
+```bash
+pip install uv
+```
+
+### 2. Clone and Setup
+
+```bash
+git clone <your-repo-url>
+cd py-vertex-as
+```
+
+### 3. Setup
+
+```bash
+uv init --no-readme
+```
 
 ```
-python main.py /Users/dougdiego/Downloads/journal/2025-01-01-doug-diego/2025-01-01-doug-diego.txt
+uv add --requirements requirements.txt
+```
+
+### 3. Install Dependencies
+
+```bash
+uv sync
+```
+
+## Configuration
+
+Create a `.env` file in the project root:
+
+## Usage
+
+### Basic Usage
+
+```bash
+uv run python main.py
+```
+
+### Alternative Usage
+
+```bash
+source .venv/bin/activate
+python main.py
 ```
